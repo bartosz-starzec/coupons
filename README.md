@@ -6,5 +6,11 @@ After cloning repository run:
 ```
 $ composer install
 $ yarn encore production
-$ ysymfony server:start
+$ symfony server:start
 ```
+
+Run tests:
+```
+$ php bin/phpunit
+```
+

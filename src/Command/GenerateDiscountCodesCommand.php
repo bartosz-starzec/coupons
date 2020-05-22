@@ -32,6 +32,10 @@ class GenerateDiscountCodesCommand extends Command
     protected function configure()
     {
         $this
+            ->setDescription('Generate discount codes')
+            ->setHelp('This command allows you to generate discount codes...');
+
+        $this
             ->addOption(
                 'numberOfCodes',
                 null,
