@@ -1,7 +1,6 @@
 <?php
 namespace App\Services;
 
-use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 

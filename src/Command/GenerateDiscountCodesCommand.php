@@ -59,6 +59,11 @@ class GenerateDiscountCodesCommand extends Command
             );
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $codes = $this->discountCodeService->generateCodes(
