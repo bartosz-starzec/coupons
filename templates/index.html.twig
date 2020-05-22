@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container p-3">
+        <div class="row justify-content-center">
+            <div class="col-5">
+                <h2>
+                    Discount codes generator
+                </h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-5">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.numberOfCodes, {'label': 'Number of codes', 'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.lengthOfCode, {'label': 'Length of code', 'attr': {'class': 'form-control', 'type': 'number'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.generate, {'attr': {'class': 'btn btn-primary'}}) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

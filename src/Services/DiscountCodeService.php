@@ -1,40 +1,72 @@
 <?php
 namespace App\Services;
 
+use Exception;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 
 class DiscountCodeService
 {
-    public function getCodes(int $numberOfCodes, int $codeLength)
+    private const CODE_AVAILABLE_CHARACTERS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    /**
+     * @param int $numberOfCodes
+     * @param int $codeLength
+     * @return array
+     */
+    public function generateCodes(int $numberOfCodes, int $codeLength): array
     {
         $codes = [];
-        for($i = 0; $i < 100000; $i++) {
-            $codes[] = $this->generateRandomString(10);
+        for($i = 0; $i < $numberOfCodes; $i++) {
+            $codes[] = $this->generateDiscountCode($codeLength);
         }
 
         return $codes;
     }
 
-    private function generateRandomString($length = 10)
+    /**
+     * @param int $length
+     * @return string
+     */
+    private function generateDiscountCode(int $length): string
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
+        $code = '';
+        $codeCharacters = self::CODE_AVAILABLE_CHARACTERS;
+        $charactersLength = strlen($codeCharacters);
         for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+            $code .= $codeCharacters[rand(0, $charactersLength - 1)];
         }
 
-        return $randomString;
+        return $code;
     }
 
     /**
      * @param array $codes
+     * @param string $pathToFile
      */
-    public function saveCodeToFile(array $codes)
+    public function saveCodesToFile(array $codes, string $pathToFile): void
     {
         $filesystem = new Filesystem();
-        $filesystem->mkdir('logs', 0777);
-//        $filesystem->chmod('/src', 0700, 0000, true);
-        $filesystem->dumpFile('/src/logs/codes.txt', 'test');
+        $content = $this->prepareCodesForSave($codes);
+
+        $filesystem->dumpFile($pathToFile, $content);
+    }
+
+    /**
+     * @param string $pathToFile
+     * @return File
+     */
+    public function getFileWithCodes(string $pathToFile): File
+    {
+        return new File($pathToFile);
+    }
+
+    /**
+     * @param array $codes
+     * @return string
+     */
+    private function prepareCodesForSave(array $codes): string
+    {
+        return implode(',', $codes);
     }
 }
