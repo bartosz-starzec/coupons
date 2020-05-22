@@ -66,7 +66,7 @@ class GenerateDiscountCodesCommand extends Command
             $input->getOption('lengthOfCode')
         );
         $this->discountCodeService->saveCodesToFile($codes, $input->getOption('file'));
-        $output->write('Codes have been generated and save to ' . $input->getOption('file'));
+        $output->write('Codes have been generated and saved to ' . $input->getOption('file'));
 
         return 0;
     }
